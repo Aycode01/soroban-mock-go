@@ -1,0 +1,16 @@
+# Sample mock configuration for soroban-mock-go
+
+contracts:
+  - id: "C1234567890"
+    storage:
+      "key1": "value1"
+      "key2": "value2"
+  - id: "C0987654321"
+    storage:
+      "counter": "42"
+
+accounts:
+  - address: "GABCDEF123456"
+    balance: 1000000
+  - address: "GHIJKL789012"
+    balance: 500000
