@@ -1,4 +1,4 @@
-module github.com/secondaccount/project/soroban-mock-go
+module github.com/Aycode01/soroban-mock-go
 
 go 1.22
 

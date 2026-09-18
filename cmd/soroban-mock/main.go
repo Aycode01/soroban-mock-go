@@ -7,9 +7,9 @@ import (
     "log"
     "os"
 
-    "github.com/secondaccount/project/soroban-mock-go/pkg/config"
-    "github.com/secondaccount/project/soroban-mock-go/pkg/contract"
-    "github.com/secondaccount/project/soroban-mock-go/pkg/mock"
+    "github.com/Aycode01/soroban-mock-go/pkg/config"
+    "github.com/Aycode01/soroban-mock-go/pkg/contract"
+    "github.com/Aycode01/soroban-mock-go/pkg/mock"
 )
 
 func main() {

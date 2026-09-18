@@ -3,7 +3,7 @@ package contract
 import (
     "encoding/json"
     "fmt"
-    "github.com/secondaccount/project/soroban-mock-go/pkg/mock"
+    "github.com/Aycode01/soroban-mock-go/pkg/mock"
 )
 
 // Simulate is a thin wrapper around the mock Engine's SimulateTransaction.

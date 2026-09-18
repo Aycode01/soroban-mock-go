@@ -5,7 +5,7 @@ import (
     "fmt"
     "sync"
 
-    "github.com/secondaccount/project/soroban-mock-go/pkg/config"
+    "github.com/Aycode01/soroban-mock-go/pkg/config"
 )
 
 // Engine is the core mock engine that holds contract and account state.

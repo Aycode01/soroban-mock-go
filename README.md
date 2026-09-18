@@ -17,7 +17,7 @@ A lightweight developer tool for mocking Soroban RPC calls and contract state lo
 
 ```bash
 # Clone the repo
-git clone https://github.com/secondaccount/project/soroban-mock-go.git
+git clone https://github.com/Aycode01/soroban-mock-go.git
 cd soroban-mock-go
 
 # Build the binary
