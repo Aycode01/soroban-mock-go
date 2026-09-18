@@ -8,6 +8,7 @@ import (
 	"github.com/Aycode01/soroban-mock-go/pkg/mock"
 )
 
+// Request represents a JSON-RPC 2.0 request.
 type Request struct {
 	JSONRPC string          `json:"jsonrpc"`
 	ID      json.RawMessage `json:"id"`
@@ -15,6 +16,7 @@ type Request struct {
 	Params  json.RawMessage `json:"params"`
 }
 
+// Response represents a JSON-RPC 2.0 response.
 type Response struct {
 	JSONRPC string          `json:"jsonrpc"`
 	ID      json.RawMessage `json:"id"`
@@ -22,15 +24,18 @@ type Response struct {
 	Error   *Error          `json:"error,omitempty"`
 }
 
+// Error represents a JSON-RPC 2.0 error.
 type Error struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
+// Server implements a JSON-RPC 2.0 HTTP server.
 type Server struct {
 	engine *mock.Engine
 }
 
+// NewServer creates a new RPC server.
 func NewServer(e *mock.Engine) *Server {
 	return &Server{engine: e}
 }
@@ -78,7 +83,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		ID:      req.ID,
 		Result:  result,
 	}
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }
 
 func (s *Server) handleTransaction(params json.RawMessage, fn func(*mock.Engine, string) (string, error)) (any, *Error) {
@@ -88,13 +93,13 @@ func (s *Server) handleTransaction(params json.RawMessage, fn func(*mock.Engine,
 	} else {
 		tx = string(params)
 	}
-	
+
 	resStr, err := fn(s.engine, tx)
 	if err != nil {
 		return nil, &Error{Code: -32000, Message: err.Error()}
 	}
 	var res map[string]any
-	json.Unmarshal([]byte(resStr), &res)
+	_ = json.Unmarshal([]byte(resStr), &res)
 	return res, nil
 }
 
@@ -139,5 +144,5 @@ func (s *Server) writeError(w http.ResponseWriter, id json.RawMessage, code int,
 		ID:      id,
 		Error:   &Error{Code: code, Message: msg},
 	}
-	json.NewEncoder(w).Encode(resp)
+	_ = json.NewEncoder(w).Encode(resp)
 }

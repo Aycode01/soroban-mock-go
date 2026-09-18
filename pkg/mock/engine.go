@@ -8,6 +8,7 @@ import (
 	"github.com/Aycode01/soroban-mock-go/pkg/config"
 )
 
+// Operation represents a single transaction action.
 type Operation struct {
 	Type       string `json:"type"` // "set_storage" | "delete_storage" | "transfer"
 	ContractID string `json:"contract_id,omitempty"`
@@ -18,26 +19,31 @@ type Operation struct {
 	Amount     int64  `json:"amount,omitempty"`
 }
 
+// Transaction represents a batch of operations.
 type Transaction struct {
 	Operations []Operation `json:"operations"`
 }
 
+// OperationResult represents the outcome of a single operation.
 type OperationResult struct {
 	Success bool   `json:"success"`
 	Error   string `json:"error,omitempty"`
 }
 
+// TransactionResult represents the overall outcome.
 type TransactionResult struct {
 	Status     string            `json:"status"`
 	Operations []OperationResult `json:"operations"`
 }
 
+// Engine maintains the in-memory state.
 type Engine struct {
 	mu        sync.RWMutex
 	contracts map[string]map[string]string
 	accounts  map[string]int64
 }
 
+// NewEngine creates a mock engine.
 func NewEngine(cfg *config.MockConfig) *Engine {
 	e := &Engine{
 		contracts: make(map[string]map[string]string),
@@ -56,6 +62,7 @@ func NewEngine(cfg *config.MockConfig) *Engine {
 	return e
 }
 
+// GetContractStorage retrieves a contract storage.
 func (e *Engine) GetContractStorage(contractID string) (map[string]string, bool) {
 	e.mu.RLock()
 	defer e.mu.RUnlock()
@@ -63,6 +70,7 @@ func (e *Engine) GetContractStorage(contractID string) (map[string]string, bool)
 	return storage, ok
 }
 
+// GetAccountBalance retrieves an account balance.
 func (e *Engine) GetAccountBalance(address string) (int64, bool) {
 	e.mu.RLock()
 	defer e.mu.RUnlock()
@@ -142,6 +150,7 @@ func applyOps(contracts map[string]map[string]string, accounts map[string]int64,
 	return results, allSuccess
 }
 
+// Simulate performs a dry run.
 func (e *Engine) Simulate(txJSON string) (*TransactionResult, error) {
 	var tx Transaction
 	if err := json.Unmarshal([]byte(txJSON), &tx); err != nil {
@@ -165,6 +174,7 @@ func (e *Engine) Simulate(txJSON string) (*TransactionResult, error) {
 	}, nil
 }
 
+// Apply commits a transaction.
 func (e *Engine) Apply(txJSON string) (*TransactionResult, error) {
 	var tx Transaction
 	if err := json.Unmarshal([]byte(txJSON), &tx); err != nil {
@@ -191,6 +201,7 @@ func (e *Engine) Apply(txJSON string) (*TransactionResult, error) {
 	}, nil
 }
 
+// DumpState exports the full state.
 func (e *Engine) DumpState() map[string]any {
 	e.mu.RLock()
 	defer e.mu.RUnlock()
