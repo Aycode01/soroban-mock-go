@@ -96,7 +96,7 @@ func TestLoadConfig(t *testing.T) {
 	tempDir := t.TempDir()
 
 	validConfig := filepath.Join(tempDir, "valid.yaml")
-	os.WriteFile(validConfig, []byte(`
+	_ = os.WriteFile(validConfig, []byte(`
 contracts:
   - id: C1
     storage:
@@ -107,7 +107,7 @@ accounts:
 `), 0644)
 
 	invalidConfig := filepath.Join(tempDir, "invalid.yaml")
-	os.WriteFile(invalidConfig, []byte(`
+	_ = os.WriteFile(invalidConfig, []byte(`
 contracts:
   - id: C1
 accounts:

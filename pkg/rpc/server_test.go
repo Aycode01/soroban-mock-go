@@ -93,7 +93,7 @@ func TestRPCServer(t *testing.T) {
 
 			if tt.wantStatus == http.StatusOK {
 				var resp Response
-				json.Unmarshal(rr.Body.Bytes(), &resp)
+				_ = json.Unmarshal(rr.Body.Bytes(), &resp)
 				if tt.wantResult && resp.Result == nil {
 					t.Errorf("expected result, got nil")
 				}
