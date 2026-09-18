@@ -2,6 +2,4 @@ module github.com/Aycode01/soroban-mock-go
 
 go 1.22
 
-require (
-    gopkg.in/yaml.v3 v3.0.1
-)
+require gopkg.in/yaml.v3 v3.0.1
