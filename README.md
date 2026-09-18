@@ -1,79 +1,86 @@
 # soroban-mock-go
 
-A lightweight developer tool for mocking Soroban RPC calls and contract state locally.
+A lightweight local development tool to mock Soroban contract state and RPC calls.
 
-## Overview
-
-`soroban-mock-go` provides a simple way to spin up a mock RPC environment for Soroban smart contract development. It reads a declarative YAML configuration describing contract IDs, storage key‑values, and mock account balances, then serves simulated RPC responses. This enables fast, deterministic testing of contract interactions without needing a full network or Horizon node.
-
-## Features
-
-- **YAML‑driven configuration** – define contracts, storage, and accounts in a clear, version‑controlled file.
-- **CLI interface** – run simulations directly from the command line.
-- **Extensible engine** – query contract state, account balances, and simulate transaction outcomes.
-- **JSON output** – convenient for piping into other tools or test harnesses.
+**Status:** Mocks storage/balance operations and JSON-RPC `simulateTransaction`/`sendTransaction`/`getAccount`/`getLedgerEntries` calls using an in-memory state engine. This does *not* execute full Soroban WASM bytecode.
 
 ## Installation
 
 ```bash
-# Clone the repo
+# Option 1: Install via go install
+go install github.com/Aycode01/soroban-mock-go/cmd/soroban-mock@latest
+
+# Option 2: Clone and build
 git clone https://github.com/Aycode01/soroban-mock-go.git
 cd soroban-mock-go
-
-# Build the binary
 go build -o soroban-mock ./cmd/soroban-mock
 ```
 
-## Quickstart
-
-1. Create a configuration file (see `examples/mock_config.yaml`).
-2. Run the tool:
-
-```bash
-./soroban-mock --config examples/mock_config.yaml
-```
-
-The tool will load the configuration and output a JSON representation of the mock state and a sample transaction simulation.
-
 ## Usage
 
-```bash
-soroban-mock --config <path-to-config.yaml> [--simulate "<tx-json>"]
+Create a configuration file (e.g., `mock_config.yaml`) defining the initial state:
+
+```yaml
+contracts:
+  - id: "CA123"
+    storage:
+      "COUNTER": "1"
+accounts:
+  - address: "GABC"
+    balance: 10000
 ```
 
-- `--config` – path to the mock configuration file (required).
-- `--simulate` – optional JSON describing a transaction to simulate; if omitted the tool prints the loaded mock state.
+### CLI Mode
 
-## Example Output
+You can apply a transaction directly via the CLI to see the resulting state:
 
+```bash
+soroban-mock --config mock_config.yaml --apply '{"operations":[{"type":"transfer","from":"GABC","to":"GDEF","amount":50}]}'
+```
+
+Output:
 ```json
 {
-  "contracts": {
-    "C123": {
-      "storage": {
-        "key1": "value1",
-        "key2": "value2"
-      }
+  "status": "success",
+  "operations": [
+    {
+      "success": true
     }
-  },
+  ]
+}
+
+New State:
+{
   "accounts": {
-    "GABC": 1000000,
-    "GDEF": 500000
+    "GABC": 9950,
+    "GDEF": 50
+  },
+  "contracts": {
+    "CA123": {
+      "COUNTER": "1"
+    }
   }
 }
 ```
 
+### RPC Server Mode
+
+Start the JSON-RPC server on port 8080:
+
+```bash
+soroban-mock --config mock_config.yaml --serve --addr ":8080"
+```
+
+Then you can send standard JSON-RPC 2.0 requests:
+
+```bash
+curl -X POST http://localhost:8080 -d '{"jsonrpc":"2.0","id":1,"method":"getAccount","params":{"address":"GABC"}}'
+```
+
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to run tests, lint, and submit PRs.
 
-1. Fork the repository.
-2. Create a feature branch.
-3. Ensure code passes `go vet` and `golint`.
-4. Open a Pull Request targeting the `main` branch.
+## Maintainer
 
-All contributions are made under the auspices of **Drips Wave** – a community of Stellar developers.
-
-## License
-
-MIT – see the [LICENSE](LICENSE) file for details.
+<!-- TODO: add your contact -->
