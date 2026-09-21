@@ -83,8 +83,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to run tests, lint, an
 
 ## Maintainer
 
-Aycode01
+<!-- TODO: add your contact -->
 
-## Social
-
-Telegram: [https://t.me/aycode01](https://t.me/aycode01)
