@@ -96,6 +96,11 @@ Then you can send standard JSON-RPC 2.0 requests:
 curl -X POST http://localhost:8080 -d '{"jsonrpc":"2.0","id":1,"method":"getAccount","params":{"address":"GABC"}}'
 ```
 
+
+## Documentation
+
+Full documentation is available in the [docs/](docs/README.md) directory.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to run tests, lint, and submit PRs.
