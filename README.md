@@ -1,5 +1,10 @@
 # soroban-mock-go
 
+[![CI](https://github.com/Aycode01/soroban-mock-go/actions/workflows/ci.yml/badge.svg)](https://github.com/Aycode01/soroban-mock-go/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Aycode01/soroban-mock-go.svg)](https://pkg.go.dev/github.com/Aycode01/soroban-mock-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Aycode01/soroban-mock-go)](https://goreportcard.com/report/github.com/Aycode01/soroban-mock-go)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A lightweight local development tool to mock Soroban contract state and RPC calls.
 
 **Status:** Mocks storage/balance operations and JSON-RPC `simulateTransaction`/`sendTransaction`/`getAccount`/`getLedgerEntries` calls using an in-memory state engine. This does *not* execute full Soroban WASM bytecode.
