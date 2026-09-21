@@ -88,5 +88,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to run tests, lint, an
 
 ## Maintainer
 
+| Name | GitHub | Contact |
+|---|---|---|
+| Aycode01 | [@Aycode01](https://github.com/Aycode01) | <!-- TODO: add preferred contact (Telegram, email, etc.) --> |
 <!-- TODO: add your contact -->
-
