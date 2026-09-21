@@ -99,7 +99,7 @@ curl -X POST http://localhost:8080 -d '{"jsonrpc":"2.0","id":1,"method":"getAcco
 
 ## Documentation
 
-Full documentation is available in the [docs/](docs/README.md) directory, or online at [GitBook](https://soroban-state-sentinel.gitbook.io/soroban-mock-go/).
+Full documentation is available in the [docs/](docs/README.md) directory, or online at [GitBook](https://soroban-mock-go.gitbook.io/soroban-mock-go-docs/).
 
 ## Contributing
 
