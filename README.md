@@ -9,6 +9,20 @@ A lightweight local development tool to mock Soroban contract state and RPC call
 
 **Status:** Mocks storage/balance operations and JSON-RPC `simulateTransaction`/`sendTransaction`/`getAccount`/`getLedgerEntries` calls using an in-memory state engine. This does *not* execute full Soroban WASM bytecode.
 
+
+## How it works
+
+`soroban-mock` holds contract storage and account balances in an in-memory
+`Engine`. Two modes operate on that state:
+
+- **Simulate** (`--simulate`) takes a snapshot of the engine, applies the requested operations to the copy, and returns the result without touching live state.
+- **Apply** (`--apply`) applies operations directly to the live engine, atomically: if any operation in a transaction fails validation, none of the operations in that transaction are committed.
+
+The RPC server (`--serve`) wraps the same engine behind a JSON-RPC 2.0
+endpoint, so `simulateTransaction`/`sendTransaction`/`getAccount`/
+`getLedgerEntries` calls all operate on one shared, mutex-guarded `Engine`
+instance for the life of the server process.
+
 ## Installation
 
 ```bash
@@ -91,4 +105,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to run tests, lint, an
 | Name | GitHub | Contact |
 |---|---|---|
 | Aycode01 | [@Aycode01](https://github.com/Aycode01) | <!-- TODO: add preferred contact (Telegram, email, etc.) --> |
-<!-- TODO: add your contact -->
