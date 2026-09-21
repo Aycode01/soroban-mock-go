@@ -1,0 +1,17 @@
+version: 1
+site:
+  title: soroban-mock-go
+  structure:
+    - type: space
+      key: space-root
+      title: Repository Root
+      path: root
+      default: true
+      content:
+        directory: /
+    - type: space
+      key: space-docs
+      title: Documentation
+      path: docs
+      content:
+        directory: /docs
